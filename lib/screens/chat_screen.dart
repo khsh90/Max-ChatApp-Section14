@@ -38,6 +38,10 @@ class ChatScreen extends StatelessWidget {
           //   );
 
           // });
+
+          Firestore.instance
+              .collection('chat/IQD8Vas22WURM65aA685/messages')
+              .add({'text': 'this added by clicking on + button'});
         },
         child: Icon(Icons.add),
       ),
