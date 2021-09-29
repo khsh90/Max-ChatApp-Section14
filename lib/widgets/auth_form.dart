@@ -35,7 +35,11 @@ class _AuthFormState extends State<AuthForm> {
                 onPressed: () {},
                 child: Text("Login"),
               ),
-              FlatButton(onPressed: () {}, child: Text('Create an account'))
+              FlatButton(
+                onPressed: () {},
+                child: Text('Create an account'),
+                textColor: Theme.of(context).primaryColor,
+              )
             ],
           )),
         ),
