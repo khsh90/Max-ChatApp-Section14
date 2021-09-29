@@ -6,6 +6,24 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  var _email = '';
+  var _userName = '';
+  var _password = '';
+  var _isLogin = true;
+
+  void trySubmit() {
+    final isValid = _formKey.currentState.validate();
+
+    if (isValid) {
+      _formKey.currentState.save();
+      print(_email);
+      print(_userName);
+      print(_password);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -14,34 +32,70 @@ class _AuthFormState extends State<AuthForm> {
         child: SingleChildScrollView(
           padding: EdgeInsets.all(20),
           child: Form(
+              key: _formKey,
               child: Column(
-            // mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(labelText: 'Email'),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              RaisedButton(
-                onPressed: () {},
-                child: Text("Login"),
-              ),
-              FlatButton(
-                onPressed: () {},
-                child: Text('Create an account'),
-                textColor: Theme.of(context).primaryColor,
-              )
-            ],
-          )),
+                // mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(labelText: 'Email'),
+                    validator: (value) {
+                      if (value.isEmpty || !value.contains('@')) {
+                        return 'Please enter a valid Email';
+                      }
+                    },
+                    onSaved: (newValue) {
+                      return _email = newValue;
+                    },
+                    key: ValueKey('Email'),
+                  ),
+                  if (!_isLogin)
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Username'),
+                      validator: (value) {
+                        if (value.isEmpty || value.length < 4) {
+                          return "Please enter a valid username";
+                        }
+                      },
+                      onSaved: (newValue) {
+                        return _userName = newValue;
+                      },
+                      //used to let flutter now this value and not save the user when switch between log and login
+                      key: ValueKey('Username'),
+                    ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Password'),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value.isEmpty || value.length < 7) {
+                        return 'Please enter a valid password';
+                      }
+                    },
+                    onSaved: (newValue) {
+                      return _password = newValue;
+                    },
+                    key: ValueKey('Password'),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  RaisedButton(
+                    onPressed: trySubmit,
+                    child: Text(_isLogin ? "Login" : 'Create an acount'),
+                  ),
+                  FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        _isLogin = !_isLogin;
+                      });
+                    },
+                    child: Text(_isLogin
+                        ? 'Create an account'
+                        : 'Already have an account'),
+                    textColor: Theme.of(context).primaryColor,
+                  )
+                ],
+              )),
         ),
       ),
     );
