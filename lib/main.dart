@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15))),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
+      //stream bulider used to switch beteen authscreen and caht screen ,and we use it here because we use fire base sdk not api
       home: StreamBuilder(
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (context, snapshot) {
