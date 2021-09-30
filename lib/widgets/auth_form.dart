@@ -5,7 +5,9 @@ class AuthForm extends StatefulWidget {
   _AuthFormState createState() => _AuthFormState();
   final void Function(String email, String userName, String password,
       bool isLogin, BuildContext ctx) submitForm;
-  AuthForm(this.submitForm);
+
+  final bool isLoading;
+  AuthForm(this.submitForm, this.isLoading);
 }
 
 class _AuthFormState extends State<AuthForm> {
@@ -15,10 +17,11 @@ class _AuthFormState extends State<AuthForm> {
   var _userName = '';
   var _password = '';
   var _isLogin = true;
+  bool _isLoading = false;
 
   void trySubmit() {
     final isValid = _formKey.currentState.validate();
-     FocusScope.of(context).unfocus();
+    FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState.save();
@@ -91,21 +94,24 @@ class _AuthFormState extends State<AuthForm> {
                   SizedBox(
                     height: 15,
                   ),
-                  RaisedButton(
-                    onPressed: trySubmit,
-                    child: Text(_isLogin ? "Login" : 'Create an acount'),
-                  ),
-                  FlatButton(
-                    onPressed: () {
-                      setState(() {
-                        _isLogin = !_isLogin;
-                      });
-                    },
-                    child: Text(_isLogin
-                        ? 'Create an account'
-                        : 'Already have an account'),
-                    textColor: Theme.of(context).primaryColor,
-                  )
+                  if (widget.isLoading) CircularProgressIndicator(),
+                  if (!widget.isLoading)
+                    RaisedButton(
+                      onPressed: trySubmit,
+                      child: Text(_isLogin ? "Login" : 'Create an acount'),
+                    ),
+                  if (!widget.isLoading)
+                    FlatButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(_isLogin
+                          ? 'Create an account'
+                          : 'Already have an account'),
+                      textColor: Theme.of(context).primaryColor,
+                    )
                 ],
               )),
         ),
