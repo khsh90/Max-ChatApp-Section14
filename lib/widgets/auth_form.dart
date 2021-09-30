@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
-  final void Function(
-      String email, String userName, String password, bool isLogin) submitForm;
+  final void Function(String email, String userName, String password,
+      bool isLogin, BuildContext ctx) submitForm;
   AuthForm(this.submitForm);
 }
 
@@ -18,6 +18,7 @@ class _AuthFormState extends State<AuthForm> {
 
   void trySubmit() {
     final isValid = _formKey.currentState.validate();
+     FocusScope.of(context).unfocus();
 
     if (isValid) {
       _formKey.currentState.save();
@@ -25,7 +26,13 @@ class _AuthFormState extends State<AuthForm> {
       print(_userName);
       print(_password);
 
-      widget.submitForm(_email, _userName, _password, _isLogin);
+      widget.submitForm(
+        _email.trim(),
+        _userName.trim(),
+        _password.trim(),
+        _isLogin,
+        context,
+      );
     }
   }
 
