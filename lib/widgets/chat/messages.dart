@@ -1,3 +1,4 @@
+import '../chat/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -7,7 +8,8 @@ class Messages extends StatelessWidget {
     return StreamBuilder(
       stream: Firestore.instance
           .collection('chats')
-          .orderBy('createdAt', descending: true)  //in order to git correct order of messages
+          .orderBy('createdAt',
+              descending: true) //in order to git correct order of messages
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -19,7 +21,8 @@ class Messages extends StatelessWidget {
         return ListView.builder(
           reverse: true,
           itemCount: chatDocs.length,
-          itemBuilder: (context, index) => Text(chatDocs[index]['text']),
+          itemBuilder: (context, index) =>
+              MessageBubble(chatDocs[index]['text']),
         );
       },
     );
