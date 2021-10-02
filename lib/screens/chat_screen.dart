@@ -1,3 +1,5 @@
+import '../widgets/chat/new_messages.dart';
+
 import '../widgets/chat/messages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +43,10 @@ class ChatScreen extends StatelessWidget {
       ),
       body: Container(
         child: Column(
-          children: [Expanded(child: Messages())],
+          children: [
+            Expanded(child: Messages()),
+            NewMessages(),
+          ],
         ),
       ),
       // StreamBuilder(
@@ -66,25 +71,25 @@ class ChatScreen extends StatelessWidget {
       //       );
       //     }),
 
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Firestore.instance
-          //     .collection('chat/IQD8Vas22WURM65aA685/messages')
-          //     .snapshots()
-          //     .listen((event) {
-          //   event.documents.forEach((element) {
-          //     print(element['text']);
-          //   }
-          //   );
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     // Firestore.instance
+      //     //     .collection('chat/IQD8Vas22WURM65aA685/messages')
+      //     //     .snapshots()
+      //     //     .listen((event) {
+      //     //   event.documents.forEach((element) {
+      //     //     print(element['text']);
+      //     //   }
+      //     //   );
 
-          // });
+      //     // });
 
-          Firestore.instance
-              .collection('chat/IQD8Vas22WURM65aA685/messages')
-              .add({'text': 'this added by clicking on + button'});
-        },
-        child: Icon(Icons.add),
-      ),
+      //     Firestore.instance
+      //         .collection('chat/IQD8Vas22WURM65aA685/messages')
+      //         .add({'text': 'this added by clicking on + button'});
+      //   },
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }
