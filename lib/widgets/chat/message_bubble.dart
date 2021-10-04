@@ -4,8 +4,9 @@ class MessageBubble extends StatelessWidget {
   final String _message;
   final bool _isMe;
   final Key key;
+  final String _userName;
 
-  MessageBubble(this._message, this._isMe, {this.key});
+  MessageBubble(this._message, this._isMe, this._userName, {this.key});
   @override
   Widget build(BuildContext context) {
     //we used row here in order to control of bo deoration color not take all width
@@ -26,13 +27,27 @@ class MessageBubble extends StatelessWidget {
             width: 150,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             margin: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
-            child: Text(
-              _message,
-              style: TextStyle(
-                  color: _isMe
-                      ? Colors.black
-                      : Theme.of(context).accentTextTheme.title.color),
-            ),
+            child: Column(
+                crossAxisAlignment:
+                    _isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _userName,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: _isMe
+                            ? Colors.black
+                            : Theme.of(context).accentTextTheme.title.color),
+                  ),
+                  Text(
+                    _message,
+                    style: TextStyle(
+                        color: _isMe
+                            ? Colors.black
+                            : Theme.of(context).accentTextTheme.title.color),
+                    textAlign: _isMe ? TextAlign.end : TextAlign.start,
+                  ),
+                ]),
           ),
         ]);
   }
