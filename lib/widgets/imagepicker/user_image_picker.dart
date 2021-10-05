@@ -7,6 +7,9 @@ import 'dart:io';
 class UserImagePicker extends StatefulWidget {
   @override
   _UserImagePickerState createState() => _UserImagePickerState();
+  UserImagePicker(this.imagePickedFn);
+
+  void Function(File pickedImage) imagePickedFn;
 }
 
 class _UserImagePickerState extends State<UserImagePicker> {
@@ -21,6 +24,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
       _imageFile = pickImageFile;
       print(_imageFile);
     });
+
+    widget.imagePickedFn(pickImageFile);
   }
 
   @override
