@@ -38,10 +38,13 @@ class _AuthScreenState extends State<AuthScreen> {
             .putFile(imageFile)
             .onComplete; //on complete used here because image path storage refreance
 
+        final image_url = await imagePath.getDownloadURL();
+
         await Firestore.instance
             .collection('users')
             .document(_authResult.user.uid)
-            .setData({'userName': userName, 'email': email});
+            .setData(
+                {'userName': userName, 'email': email, 'imageUrl': image_url});
       }
       //used to get a specific error especially from fire base like user name and password error , not general error like catch
     } on PlatformException catch (error) {
