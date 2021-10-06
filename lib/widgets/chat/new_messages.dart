@@ -22,7 +22,8 @@ class _NewMessagesState extends State<NewMessages> {
       'createdAt': Timestamp.now(),
       'userId': user.uid,
       'userName':
-          username['userName'] //username of users collection in fire store
+          username['userName'], //username of users collection in fire store
+      'imageUrl': username['imageUrl']
     });
     _textController.clear();
   }
