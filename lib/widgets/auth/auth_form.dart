@@ -5,7 +5,7 @@ import 'dart:io';
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
-  final void Function(String email, String userName, String password,
+  final void Function(String email, String userName,File imageFile, String password,
       bool isLogin, BuildContext ctx) submitForm;
 
   final bool isLoading;
@@ -17,17 +17,18 @@ class _AuthFormState extends State<AuthForm> {
 
   var _email = '';
   var _userName = '';
+  File _imageFile;
   var _password = '';
   var _isLogin = true;
   bool _isLoading = false;
-  File imageFile;
+  
 
   void pickImageFile(File image) {
-    imageFile = image;
+    _imageFile = image;
   }
 
   void trySubmit() {
-    if (imageFile == null && !_isLogin) {
+    if (_imageFile == null && !_isLogin) {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('Please pick an image'),
         backgroundColor: Theme.of(context).errorColor,
@@ -46,6 +47,7 @@ class _AuthFormState extends State<AuthForm> {
       widget.submitForm(
         _email.trim(),
         _userName.trim(),
+         _imageFile,
         _password.trim(),
         _isLogin,
         context,

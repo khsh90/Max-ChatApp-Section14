@@ -1,9 +1,10 @@
 import 'package:flutter/services.dart';
-
+import 'dart:io';
 import '../widgets/auth/auth_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthScreen extends StatefulWidget {
   @override
@@ -13,8 +14,8 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final _auth = FirebaseAuth.instance;
   bool _isLoading = false;
-  void submitAuthForm(String email, String userName, String password,
-      bool isLogin, BuildContext ctx) async {
+  void submitAuthForm(String email, String userName, File imageFile,
+      String password, bool isLogin, BuildContext ctx) async {
     AuthResult _authResult;
     try {
       setState(() {
@@ -26,6 +27,16 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         _authResult = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
+        //upload  the image to firebase .
+        final imagePath = FirebaseStorage.instance
+            .ref() //ref refere to buckt as storage of firebase has a pucket
+            .child('user_images')
+            .child(_authResult.user.uid + '.jpg');
+
+        await imagePath
+            .putFile(imageFile)
+            .onComplete; //on complete used here because image path storage refreance
 
         await Firestore.instance
             .collection('users')
