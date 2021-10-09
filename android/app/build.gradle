@@ -67,3 +67,4 @@ dependencies {
     implementation 'com.android.support:multidex:0.13.5' //used when add   cloud_firestore: 0.13.5 in pubspec.yaml
  
 }
+apply plugin: 'com.google.gms.google-services' //used for firebase cloud messages
