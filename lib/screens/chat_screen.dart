@@ -13,6 +13,7 @@ class ChatScreen extends StatelessWidget {
         title: Text('Chat screen'),
         actions: [
           DropdownButton(
+            underline: Container(),
             icon: Icon(
               Icons.more_vert,
               color: Theme.of(context).primaryIconTheme.color,
