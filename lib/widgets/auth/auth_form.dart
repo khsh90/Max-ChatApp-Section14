@@ -5,8 +5,8 @@ import 'dart:io';
 class AuthForm extends StatefulWidget {
   @override
   _AuthFormState createState() => _AuthFormState();
-  final void Function(String email, String userName,File imageFile, String password,
-      bool isLogin, BuildContext ctx) submitForm;
+  final void Function(String email, String userName, File imageFile,
+      String password, bool isLogin, BuildContext ctx) submitForm;
 
   final bool isLoading;
   AuthForm(this.submitForm, this.isLoading);
@@ -21,7 +21,6 @@ class _AuthFormState extends State<AuthForm> {
   var _password = '';
   var _isLogin = true;
   bool _isLoading = false;
-  
 
   void pickImageFile(File image) {
     _imageFile = image;
@@ -33,7 +32,7 @@ class _AuthFormState extends State<AuthForm> {
         content: Text('Please pick an image'),
         backgroundColor: Theme.of(context).errorColor,
       ));
-      return; //in order not movewith submit form 
+      return; //in order not movewith submit form
     }
     final isValid = _formKey.currentState.validate();
     FocusScope.of(context).unfocus();
@@ -47,7 +46,7 @@ class _AuthFormState extends State<AuthForm> {
       widget.submitForm(
         _email.trim(),
         _userName.trim(),
-         _imageFile,
+        _imageFile,
         _password.trim(),
         _isLogin,
         context,
@@ -71,6 +70,9 @@ class _AuthFormState extends State<AuthForm> {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(labelText: 'Email'),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
                     validator: (value) {
                       if (value.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid Email';
@@ -84,6 +86,9 @@ class _AuthFormState extends State<AuthForm> {
                   if (!_isLogin)
                     TextFormField(
                       decoration: InputDecoration(labelText: 'Username'),
+                      autocorrect: false,
+                      enableSuggestions: true,
+                      textCapitalization: TextCapitalization.none,
                       validator: (value) {
                         if (value.isEmpty || value.length < 4) {
                           return "Please enter a valid username";

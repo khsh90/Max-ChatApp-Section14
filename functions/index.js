@@ -1,9 +1,13 @@
 const functions = require("firebase-functions");
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+  exports.createUser = functions.firestore
+
+  //between {} put any name you want it's just a trigger for firebase
+exports.myFunction = functions.firestore
+  .document('chat/{message}')
+  .onCreate((snapshot, context) => { 
+
+    console.log(snapshot.data()) ;
+
+   });
+
