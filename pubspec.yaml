@@ -37,6 +37,20 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.2"
+  flutter_native_splash: ^0.2.8
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "dev_assets/chat.png"
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#e9ab38"
+  image: "dev_splash/chatsplash.png"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
